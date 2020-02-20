@@ -1,7 +1,11 @@
+#Sandra Berenice Valdes Platas
+#187340
+#20.02.20
+
 library(plyr)
 accidentes <- c(0,1,0,2,2,1,4,3,0,1,5,1,2,3,4,0,1,1,3,4)
 acc <- count(accidentes)
-acc
+acc 
 
 
 (acc$freq/sum(acc$freq)*100)
@@ -9,7 +13,6 @@ acc
 acc$rf <- acc$freq/sum(acc$freq)*100
 
 barplot(acc$freq, names.arg = acc$x, main = "accidentes en el aserradero", col = "yellow")
-
 mean(accidentes)
 sum(accidentes)
 
@@ -17,10 +20,11 @@ sum(accidentes)
 
 especies <- c("F","H","F","C","F","A","H","F","H","C","A","C","F","H","H","H","F","H","A","C","F","H","H","F")
 
-frecu <-table(especies)
-prop.table(frecu)
-frecu
+.sp <- count(especies)
+.sp$rf <- .sp$freq/sum(.sp$freq)*100
+.sp
 
+barplot(.sp$freq, names.arg = .sp$x, col= "blue", ylab= "frecuencia", xlab= "Especies"  )
 
 # Ejercicio 3 -------------------------------------------------------------
 
@@ -29,12 +33,9 @@ cuadro1 <- source_data("https://www.dropbox.com/s/hmsf07bbayxv6m3/cuadro1.csv?dl
 
 #Encontrar la frecuencia absoluta para la variable vecinos y especie
 
-frecu <-table(cuadro1$Vecinos)
-prop.table(frecu)
-frecu
-frecu <-table(cuadro1$Especie)
-prop.table(frecu)
-frecu
+.vc <- table(cuadro1$Vecinos, cuadro1$Especie)
+.vc1 <- addmargins(as.table(.vc))
+.vc1
 
 
 
@@ -42,12 +43,16 @@ frecu
 
 dbh <- cuadro1$Diametro 
 range(dbh)
-
-intervalo <- seq(8, 21, by=3)
+intervalo <- seq(7.5, 25.5, by=5)
 intervalo
 
 dbh.table <- cut(dbh,intervalo)
 table(dbh.table)
+
+par(mfrow=c(1,2))
+hist(dbh, main = "Datos de intervalo definidos", col="red")
+hist(cuadro1$Altura, breaks = intervalo, main = "Datos con intervalo definido", col = "green")
+par(mfrow=c(1,1))
 
 dbh.prop <- cbind(table(dbh.table))
 dbh.per <- round(prop.table(dbh.prop)*100,2)
@@ -55,11 +60,16 @@ dbh.per <- round(prop.table(dbh.prop)*100,2)
 
 # Ejercicio 5 -------------------------------------------------------------
 
-intervalo <- seq(7.5, 25.5, by=5)
+diametro <- cuadro1$Diametro
+range(diametro)
+intervalo <- seq(7.5, 27.5, by=5)
 intervalo
 
 par(mfrow=c(1,2))
 hist(cuadro1$Diametro, col= "blue" , main = "sin modificar", xlab = "diametro")
-hist(cuadro1$Diametro, main = "Datos intervalos")
+hist(cuadro1$Diametro, breaks = intervalo, col= "pink", main = "Datos intervalos")
 par(mfrow=c(1,1))
+
+
+
 
